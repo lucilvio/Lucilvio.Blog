@@ -9,7 +9,7 @@ namespace Lucilvio.Blog.Web
     {
         private static IList<Post> _posts;
 
-        public Posts()
+        static Posts()
         {
             _posts = new List<Post>();
         }

@@ -20,7 +20,7 @@ namespace Lucilvio.Blog.Web.Controllers
             var posts = new Posts();
             posts.Adicionar(new Post(modelo.Titulo, modelo.Texto));
             
-            return RedirectToAction(nameof(Cadastrar));
+            return RedirectToAction("Index", "Home");
         }
     }
 }

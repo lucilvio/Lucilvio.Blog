@@ -13,6 +13,7 @@ namespace Lucilvio.Blog.Web
                 throw new InvalidOperationException("Não é possível criar um post sem texto");
 
             this.Texto = texto;
+            this.Titulo = titulo;
             this.DataDoCadastro = DateTime.Now;
         }
 
