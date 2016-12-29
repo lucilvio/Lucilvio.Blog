@@ -8,12 +8,18 @@ namespace Lucilvio.Blog.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private IUnidadeDeTrabalho _unidadeDeTrabalho;
+
+        public HomeController(IUnidadeDeTrabalho unidadeDeTrabalho)
+        {
+            this._unidadeDeTrabalho = unidadeDeTrabalho;
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
-            var posts = new Posts().Listar();
-
-            return View(posts);
+            var repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho).Listar();
+            return View(repositorioDePosts);
         }
     }
 }

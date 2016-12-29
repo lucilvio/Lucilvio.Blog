@@ -4,6 +4,10 @@ namespace Lucilvio.Blog.Web
 {
     public class Post
     {
+        private Post()
+        {
+        }
+
         public Post(string titulo, string texto)
         {
             if (string.IsNullOrEmpty(titulo))
@@ -17,8 +21,9 @@ namespace Lucilvio.Blog.Web
             this.DataDoCadastro = DateTime.Now;
         }
 
-        public string Titulo { get; }
-        public string Texto { get; }
-        public DateTime DataDoCadastro { get; }
+        public int Id { get; private set; }
+        public string Titulo { get; private set; }
+        public string Texto { get; private set; }
+        public DateTime DataDoCadastro { get; private set; }
     }
 }

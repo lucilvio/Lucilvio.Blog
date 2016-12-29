@@ -8,6 +8,13 @@ namespace Lucilvio.Blog.Web.Controllers
 {
     public class PostController : Controller
     {
+        private IUnidadeDeTrabalho _unidadeDeTrabalho;
+
+        public PostController(IUnidadeDeTrabalho unidadeDeTrabalho)
+        {
+            this._unidadeDeTrabalho = unidadeDeTrabalho;
+        }
+
         [HttpGet]
         public ActionResult Cadastrar()
         {
@@ -17,9 +24,9 @@ namespace Lucilvio.Blog.Web.Controllers
         [HttpPost]
         public ActionResult Cadastrar(ModeloDePost modelo)
         {
-            var posts = new Posts();
-            posts.Adicionar(new Post(modelo.Titulo, modelo.Texto));
-            
+            var repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho);
+            repositorioDePosts.Adicionar(new Post(modelo.Titulo, modelo.Texto));
+
             return RedirectToAction("Index", "Home");
         }
     }
