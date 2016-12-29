@@ -1,18 +1,21 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
 <h1>Posts</h1>
 
-@foreach(var post in Model)
+@foreach (var post in Model)
 {
     <div class="row">
         <div class="col-lg-12">
-            <h3> @post.Titulo </h3>
-            
-            <p> @post.Texto </p>
-            <span style="font-size: x-small"> <i class="glyphicon glyphicon-time"></i> @post.DataDoCadastro </span>
+            <div style="height: 70px;">
+                <h3 class="pull-left"> @post.Titulo </h3>
+                <a style="margin-top: 25px; margin-left: 20px" class="pull-left" href="@Url.Action("Editar", "Post", new { post.Id })"> <i class="glyphicon glyphicon-pencil"> </i> </a>
+            </div>
+            <div >
+                <p> @post.Conteudo </p>
+                <span style="font-size: x-small"> <i class="glyphicon glyphicon-time"></i> @post.DataDoCadastro </span>
+            </div>
         </div>
     </div>
     <hr />

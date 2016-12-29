@@ -50,5 +50,28 @@ namespace Lucilvio.Blog.Testes
 
             Assert.AreEqual(1, repositorioDePosts.Listar().Count());
         }
+
+        [TestMethod]
+        public void BuscaPostPorIdentificador()
+        {
+            var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar"));
+
+            Assert.IsNotNull(repositorioDePosts.Pegar(0));
+        }
+
+        [TestMethod]
+        public void AlteraDadosDoPost()
+        {
+            var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar"));
+
+            repositorioDePosts.Alterar(0, new Post("Foo alterado", "Foo Bar alterado"));
+
+            var postAlterado = repositorioDePosts.Pegar(0);
+
+            Assert.AreEqual("Foo alterado", postAlterado.Titulo);
+            Assert.AreEqual("Foo Bar alterado", postAlterado.Conteudo);
+        }
     }
 }

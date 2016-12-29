@@ -37,9 +37,9 @@ namespace Lucilvio.Blog.Testes
         }
 
         [TestMethod]
-        public void PostTemTexto()
+        public void PostTemConteudo()
         {
-            Assert.AreEqual("Foo Bar", this._post.Texto);
+            Assert.AreEqual("Foo Bar", this._post.Conteudo);
         }
 
         [TestMethod]
@@ -49,6 +49,29 @@ namespace Lucilvio.Blog.Testes
             var cultura = new CultureInfo("pt-BR");
 
             Assert.AreEqual(DateTime.Now.ToString(mascara, cultura), this._post.DataDoCadastro.ToString(mascara, cultura));
+        }
+
+        [TestMethod]
+        public void AlteraDadosDoPost()
+        {
+            this._post.AlterarDados("Foo Bar Alterado", "Conteúdo do post alterado");
+
+            Assert.AreEqual("Foo Bar Alterado", this._post.Titulo);
+            Assert.AreEqual("Conteúdo do post alterado", this._post.Conteudo);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void AsseguraQueOTituloNaoSejaVazioNaEdicao()
+        {
+            this._post.AlterarDados("", "Conteúdo do post alterado");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void AsseguraQueOConteudoNaoSejaVazioNaEdicao()
+        {
+            this._post.AlterarDados("Foo Bar", "");
         }
     }
 }

@@ -25,5 +25,18 @@ namespace Lucilvio.Blog.Web
         {
             return this._unidadeDeTrabalho.Lista<Post>().ToList();
         }
+
+        public Post Pegar(int id)
+        {
+            return this._unidadeDeTrabalho.Lista<Post>().FirstOrDefault(p => p.Id == id);
+        }
+
+        public void Alterar(int id, Post post)
+        {
+            var postOriginal = this.Pegar(id);
+            postOriginal.AlterarDados(post.Titulo, post.Conteudo);
+
+            this._unidadeDeTrabalho.Persistir();
+        }
     }
 }

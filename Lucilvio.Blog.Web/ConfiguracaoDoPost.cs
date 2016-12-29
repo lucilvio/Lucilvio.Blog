@@ -12,7 +12,7 @@ namespace Lucilvio.Blog.Web
         {
             base.ToTable("Posts");
             base.HasKey(p => p.Id);
-            base.Property(p => p.Texto).IsMaxLength().IsRequired();
+            base.Property(p => p.Conteudo).IsMaxLength().IsRequired();
             base.Property(p => p.Titulo).HasMaxLength(255).IsRequired();
             base.Property(p => p.DataDoCadastro).IsRequired();
         }
