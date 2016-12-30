@@ -23,7 +23,7 @@ namespace Lucilvio.Blog.Web
 
         public IEnumerable<Post> Listar()
         {
-            return this._unidadeDeTrabalho.Lista<Post>().ToList();
+            return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).ToList();
         }
 
         public Post Pegar(int id)

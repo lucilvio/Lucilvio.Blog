@@ -73,5 +73,19 @@ namespace Lucilvio.Blog.Testes
         {
             this._post.AlterarDados("Foo Bar", "");
         }
+
+        [TestMethod]
+        public void TemComentarios()
+        {
+            Assert.IsNotNull(this._post.Comentarios);
+        }
+
+        [TestMethod]
+        public void AdicionaComentarioAoPost()
+        {
+            this._post.AdicionarComentario(new Comentario("Foo Bar"));
+
+            Assert.IsTrue(this._post.TemComentarios);
+        }
     }
 }

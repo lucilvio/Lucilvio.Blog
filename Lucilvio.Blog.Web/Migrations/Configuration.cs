@@ -5,7 +5,7 @@ namespace Lucilvio.Blog.Web.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ContextoDoBlog>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@ namespace Lucilvio.Blog.Web.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(DbContext context)
+        protected override void Seed(ContextoDoBlog context)
         {
             //  This method will be called after migrating to the latest version.
 

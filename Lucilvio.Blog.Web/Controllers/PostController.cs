@@ -50,5 +50,18 @@ namespace Lucilvio.Blog.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpPost]
+        public JsonResult Comentar(int idDoPost, string conteudo)
+        {
+            var repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho);
+            var post = repositorioDePosts.Pegar(idDoPost);
+
+            var comentario = new Comentario(conteudo);
+            post.AdicionarComentario(comentario);
+            this._unidadeDeTrabalho.Persistir();
+
+            return Json(new { comentario = comentario.Conteudo, data = comentario.Data.ToShortDateString() });
+        }
     }
 }

@@ -16,3 +16,8 @@ textarea {
     max-width: 280px;
 }
 
+input.error {
+    border-color: red;
+}
+
+

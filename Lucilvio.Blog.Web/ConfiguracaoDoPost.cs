@@ -10,8 +10,11 @@ namespace Lucilvio.Blog.Web
     {
         public ConfiguracaoDoPost()
         {
-            base.ToTable("Posts");
+            base.ToTable("Post");
             base.HasKey(p => p.Id);
+
+            base.Ignore(p => p.TemComentarios);
+
             base.Property(p => p.Conteudo).IsMaxLength().IsRequired();
             base.Property(p => p.Titulo).HasMaxLength(255).IsRequired();
             base.Property(p => p.DataDoCadastro).IsRequired();
