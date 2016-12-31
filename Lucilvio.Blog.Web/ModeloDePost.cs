@@ -18,7 +18,7 @@ namespace Lucilvio.Blog.Web
             this.Titulo = post.Titulo;
             this.Conteudo = post.Conteudo;
             this.DataDoCadastro = post.DataDoCadastro.ToShortDateString();
-
+            this.QuantidadeDePosts = post.QuantidadeDeComentarios.ToString();
             this.Comentarios = post.Comentarios.ToList();
         }
 
@@ -27,6 +27,7 @@ namespace Lucilvio.Blog.Web
         public string Titulo { get; set; }
         public string Conteudo { get; set; }
         public string DataDoCadastro { get; set; }
+        public string QuantidadeDePosts { get; private set; }
         public IList<Comentario> Comentarios { get; set; }
 
         public string ConteudoResumido

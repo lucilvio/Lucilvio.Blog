@@ -87,5 +87,13 @@ namespace Lucilvio.Blog.Testes
 
             Assert.IsTrue(this._post.TemComentarios);
         }
+
+        [TestMethod]
+        public void RecuperaQuantidadeDePosts()
+        {
+            this._post.AdicionarComentario(new Comentario("Foo Bar"));
+
+            Assert.AreEqual(1, this._post.QuantidadeDeComentarios);
+        }
     }
 }

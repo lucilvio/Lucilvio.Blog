@@ -27,6 +27,7 @@ namespace Lucilvio.Blog.Web
         public DateTime DataDoCadastro { get; private set; }
 
         public bool TemComentarios => this.Comentarios.Any();
+        public int QuantidadeDeComentarios => this.Comentarios.Count();
 
         public ICollection<Comentario> Comentarios { get; private set; }
 
