@@ -18,8 +18,12 @@ namespace Lucilvio.Blog.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho).Listar();
-            return View(repositorioDePosts);
+            var listaDePostsEncontrados = new RepositorioDePosts(this._unidadeDeTrabalho).Listar();
+            var posts = new List<ModeloDePost>();
+
+            listaDePostsEncontrados.ToList().ForEach(p => posts.Add(new ModeloDePost(p)));
+
+            return View(posts);
         }
     }
 }

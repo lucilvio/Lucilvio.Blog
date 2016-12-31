@@ -51,6 +51,18 @@ namespace Lucilvio.Blog.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public ActionResult Ver(int? id)
+        {
+            if (!id.HasValue)
+                return RedirectToAction("Index", "Home");
+
+            var repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho);
+            var post = repositorioDePosts.Pegar(id.Value);
+
+            return View(post);
+        }
+
         [HttpPost]
         public JsonResult Comentar(int idDoPost, string conteudo)
         {
