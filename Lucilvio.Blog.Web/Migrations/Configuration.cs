@@ -15,18 +15,8 @@ namespace Lucilvio.Blog.Web.Migrations
 
         protected override void Seed(ContextoDoBlog context)
         {
-            //  This method will be called after migrating to the latest version.
+            context.Set<Usuario>().AddOrUpdate(new Usuario("admin", "admin"));
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
         }
     }
 }

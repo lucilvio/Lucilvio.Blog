@@ -22,7 +22,20 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li> <a href="@Url.Action("Cadastrar", "Post")"> Novo Post </a> </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li> <a href="@Url.Action("Cadastrar", "Post")"> Novo Post </a> </li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li style="color: white"> Bem vindo @User.Identity.Name &nbsp; | <form action="@Url.Action("Deslogar", "Login")"> <button class="btn btn-link">Sair</button> </form> </li>
+                    }
+                    else
+                    {
+                        <li><a href="#" data-toggle="modal" data-target="#modal-login"> Fazer Login </a></li>
+                    }
                 </ul>
             </div>
         </div>
@@ -30,7 +43,7 @@
 
     <div class="container body-content">
         @RenderBody()
-        <br/>
+        <br />
         <footer>
             <p>&copy; @DateTime.Now.Year - Lucilvio.Blog - Todos os direitos reservados </p>
         </footer>
@@ -40,6 +53,12 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 
+    <script src="~/Scripts/blog/geral.js"></script>
+
     @RenderSection("scripts", false)
+
+    @Html.Partial("_ModalLogin")
+    @Html.Partial("_Mensagens")
+
 </body>
 </html>

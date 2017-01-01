@@ -38,42 +38,6 @@
 </div>
 
 @section scripts {
-
-    <script>
-        $(document).ready(function () {
-            $('form').validate({
-                errorPlacement: function (error, element) {
-                    return true;
-                }
-            });
-
-            $(".adicionar-comentario").on("click", function () {
-                var post = $(this).parents("div[class='post']");
-
-                if (!post.find("#formulario-de-comentario").valid()) {
-                    return;
-                }
-
-                var idDoPost = post.find("#idDoPost").val();
-                var comentario = post.find("#comentario");
-                var listaDeComentarios = post.find("#lista-de-comentarios");
-                var botaoComentar = $(this);
-
-                $.ajax({
-                    url: '@Url.Action("Comentar", "Post")',
-                    data: { idDoPost, conteudo: $(comentario).val() },
-                    type: "POST",
-                    beforeSend: function () {
-                        botaoComentar.attr("disabled", "disabled");
-                    },
-                    success: function (retorno) {
-                        $(comentario).val("");
-                        botaoComentar.removeAttr("disabled");
-                        $(listaDeComentarios).append("<li style='font-size: small'>" + retorno.comentario + "<span style='font-size: x-small'> <i class='glyphicon glyphicon-time'></i> "
-                            + retorno.data + " </span> </li>");
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="~/Scripts/blog/servicos/servico-de-comentarios.js"></script>
+    <script src="~/Scripts/blog/ver-post.js"></script>
 }

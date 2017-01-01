@@ -4,7 +4,7 @@
 
 <h1>Posts</h1>
 
-@foreach (var post in Model)
+@foreach (var post in Model.Posts)
 {
     <div class="post">
         <div class="row">
@@ -12,7 +12,10 @@
                 <div style="height: 70px;">
                     <input type="hidden" id="idDoPost" value="@post.Id" />
                     <h3 class="pull-left"> @post.Titulo </h3>
-                    <a style="margin-top: 25px; margin-left: 20px" class="pull-left" href="@Url.Action("Editar", "Post", new { post.Id })"> <i class="glyphicon glyphicon-pencil"> </i> </a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a style="margin-top: 25px; margin-left: 20px" class="pull-left" href="@Url.Action("Editar", "Post", new { post.Id })"> <i class="glyphicon glyphicon-pencil"> </i> </a>
+                    }
                 </div>
                 <div>
                     <p> @post.ConteudoResumido </p>

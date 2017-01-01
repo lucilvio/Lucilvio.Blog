@@ -29,6 +29,7 @@ namespace Lucilvio.Blog.Web.App_Start
         private static void InitializeContainer(Container container)
         {
             container.Register<IUnidadeDeTrabalho, ContextoDoBlog>(Lifestyle.Scoped);
+            container.Register<IServicoDeAutenticacao, ServicoDeAutenticacaoViaFormsAuthentication>(Lifestyle.Singleton);
         }
     }
 }

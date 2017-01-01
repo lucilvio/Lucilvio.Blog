@@ -16,12 +16,14 @@ namespace Lucilvio.Blog.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Cadastrar()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Cadastrar(ModeloDePost modelo)
         {
             var repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho);
@@ -31,6 +33,7 @@ namespace Lucilvio.Blog.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Editar(int? id)
         {
             if (!id.HasValue)
@@ -43,6 +46,7 @@ namespace Lucilvio.Blog.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Editar(ModeloDePost modelo)
         {
             var repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho);

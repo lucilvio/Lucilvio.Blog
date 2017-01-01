@@ -19,11 +19,9 @@ namespace Lucilvio.Blog.Web.Controllers
         public ActionResult Index()
         {
             var listaDePostsEncontrados = new RepositorioDePosts(this._unidadeDeTrabalho).Listar();
-            var posts = new List<ModeloDePost>();
+            var modeloDeListaDePosts = new ModeloDeListaDePosts(listaDePostsEncontrados);
 
-            listaDePostsEncontrados.ToList().ForEach(p => posts.Add(new ModeloDePost(p)));
-
-            return View(posts);
+            return View(modeloDeListaDePosts);
         }
     }
 }
