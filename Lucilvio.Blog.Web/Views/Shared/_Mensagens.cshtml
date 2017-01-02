@@ -1,6 +1,11 @@
 ﻿<script>
-        var mensagemDeErro = '@TempData["mensagemDeErro"]';
-        if (mensagemDeErro) {
-            alert(mensagemDeErro);
-        }
+    var mensagemDeErro = '@TempData["mensagemDeErro"]';
+    var mensagemDeSucesso = '@TempData["mensagemDeSucesso"]';
+
+    if (mensagemDeErro) {
+        alert(mensagemDeErro);
+    }
+    else if (mensagemDeSucesso) {
+        alert(mensagemDeSucesso);
+    }
 </script>

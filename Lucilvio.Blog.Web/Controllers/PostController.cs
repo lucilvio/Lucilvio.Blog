@@ -9,10 +9,12 @@ namespace Lucilvio.Blog.Web.Controllers
     public class PostController : Controller
     {
         private IUnidadeDeTrabalho _unidadeDeTrabalho;
+        private RepositorioDePosts _repositorioDePosts;
 
         public PostController(IUnidadeDeTrabalho unidadeDeTrabalho)
         {
             this._unidadeDeTrabalho = unidadeDeTrabalho;
+            this._repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho);
         }
 
         [HttpGet]
@@ -24,10 +26,10 @@ namespace Lucilvio.Blog.Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [CapturarErros]
         public ActionResult Cadastrar(ModeloDePost modelo)
         {
-            var repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho);
-            repositorioDePosts.Adicionar(new Post(modelo.Titulo, modelo.Conteudo));
+            this._repositorioDePosts.Adicionar(new Post(modelo.Titulo, modelo.Conteudo));
 
             return RedirectToAction("Index", "Home");
         }
@@ -39,30 +41,29 @@ namespace Lucilvio.Blog.Web.Controllers
             if (!id.HasValue)
                 return RedirectToAction("Index", "Home");
 
-            var repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho);
-            var post = repositorioDePosts.Pegar(id.Value);
+            var post = this._repositorioDePosts.Pegar(id.Value);
 
             return View(post);
         }
 
         [HttpPost]
         [Authorize]
+        [CapturarErros]
         public ActionResult Editar(ModeloDePost modelo)
         {
-            var repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho);
-            repositorioDePosts.Alterar(modelo.Id, new Post(modelo.Titulo, modelo.Conteudo));
+            this._repositorioDePosts.Alterar(modelo.Id, new Post(modelo.Titulo, modelo.Conteudo));
 
             return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
+        [CapturarErros]
         public ActionResult Ver(int? id)
         {
             if (!id.HasValue)
                 return RedirectToAction("Index", "Home");
 
-            var repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho);
-            var post = repositorioDePosts.Pegar(id.Value);
+            var post = this._repositorioDePosts.Pegar(id.Value);
 
             return View(post);
         }

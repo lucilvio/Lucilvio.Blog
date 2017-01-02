@@ -65,7 +65,7 @@
     <Compile Include="TestesUnitariosDoRepositorioDeUsuarios.cs" />
     <Compile Include="TestesUnitariosDoRepositorioDePosts.cs" />
     <Compile Include="TestesUnitariosDeComentario.cs" />
-    <Compile Include="TestesUnitarosDoUsuario.cs" />
+    <Compile Include="TestesUnitariosDoUsuario.cs" />
     <Compile Include="TestesUnitarosDoPost.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -74,5 +74,18 @@ namespace Lucilvio.Blog.Testes
 
             Assert.AreEqual("Login incorreto", controller.TempData["mensagemDeErro"]);
         }
+
+        [TestMethod]
+        public void NaoFazLoginQuandoUsuarioESenhaSaoCorretosMasOUsuarioNaoTemPodeSeAutenticar()
+        {
+            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo bar", "foo"));
+            var usuario = this._repositorioDeUsuarios.Pegar(0);
+            usuario.RetirarPermissaoDeAutenticacao();
+
+            var controller = new LoginController(this._mockDaUnidadeDeTrabalho.Object, this._mockDoServicoDeAutenticacao.Object);
+            var resultado = controller.Logar("Foo bar", "foo") as RedirectResult;
+
+            Assert.AreEqual("Usuário não tem permissão de login", controller.TempData["mensagemDeErro"]);
+        }
     }
 }

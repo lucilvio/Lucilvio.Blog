@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Cadastrar";
+}
+
+<h2>Cadastrar novo usuário </h2>
+
+<div class="row">
+    <form action="@Url.Action("Cadastrar","Usuario")" method="post">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label class="control-label"> Login </label>
+                <input type="text" name="Login" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Senha </label>
+                <input type="password" name="Senha" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Confirmacação da Senha </label>
+                <input type="password" name="ConfirmacaoDaSenha" class="form-control" required />
+            </div>
+            
+            <button class="btn btn-primary" type="submit"> Cadastrar </button>
+        </div>
+    </form>
+</div>
+

@@ -55,6 +55,14 @@ namespace Lucilvio.Blog.Testes
         }
 
         [TestMethod]
+        public void BuscaUsuarioPorIdentificador()
+        {
+            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo bar", "senha"));
+
+            Assert.IsNotNull(this._repositorioDeUsuarios.Pegar(0));
+        }
+
+        [TestMethod]
         public void BuscaUsuarioPeloLoginESenha()
         {
             this._repositorioDeUsuarios.Adicionar(new Usuario("Foo Bar", "Foo"));
@@ -70,6 +78,29 @@ namespace Lucilvio.Blog.Testes
             var usuarioEncontrado = this._repositorioDeUsuarios.PegarPorLoginESenha("Foo ", "Foo");
 
             Assert.IsNull(usuarioEncontrado);
+        }
+
+        [TestMethod]
+        public void ListaUsuarios()
+        {
+            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo bar", "foo"));
+            var usuarios = this._repositorioDeUsuarios.Listar();
+
+            Assert.AreEqual(1, this._usuarios.Count());
+
+        }
+
+        [TestMethod]
+        public void AlteraUsuario()
+        {
+            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo bar", "foo"));
+            this._repositorioDeUsuarios.Alterar(0, new Usuario("Foo bar editado", "foo editado"), false);
+
+            var usuarioAlterado = this._repositorioDeUsuarios.Pegar(0);
+
+            Assert.AreEqual("Foo bar editado", usuarioAlterado.Login);
+            Assert.AreEqual("foo editado", usuarioAlterado.Senha);
+            Assert.IsFalse(usuarioAlterado.PodeSeAutenticar);
         }
     }
 }

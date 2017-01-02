@@ -30,6 +30,12 @@ namespace Lucilvio.Blog.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            if(!usuarioEncontrado.PodeSeAutenticar)
+            {
+                base.TempData["mensagemDeErro"] = "Usuário não tem permissão de login";
+                return RedirectToAction("Index", "Home");
+            }
+
             this._servicoDeAutenticacao.Autenticar(usuarioEncontrado);
 
             return RedirectToAction("Index", "Home");

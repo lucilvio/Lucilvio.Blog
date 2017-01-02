@@ -15,8 +15,13 @@ namespace Lucilvio.Blog.Web.Migrations
 
         protected override void Seed(ContextoDoBlog context)
         {
-            context.Set<Usuario>().AddOrUpdate(new Usuario("admin", "admin"));
+            var admin = context.Set<Usuario>().FirstOrDefault(u => u.Login == "admin");
 
+            if (admin == null)
+            {
+                context.Set<Usuario>().Add(new Usuario("admin", "admin"));
+                context.SaveChanges();
+            }
         }
     }
 }

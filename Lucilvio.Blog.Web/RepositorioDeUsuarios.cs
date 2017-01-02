@@ -25,5 +25,23 @@ namespace Lucilvio.Blog.Web
         {
             return this._unidadeDeTrabalho.Lista<Usuario>().FirstOrDefault(u => u.Login == login && u.Senha == senha);
         }
+
+        public object Listar()
+        {
+            return this._unidadeDeTrabalho.Lista<Usuario>().ToList();
+        }
+
+        public Usuario Pegar(int id)
+        {
+            return this._unidadeDeTrabalho.Lista<Usuario>().FirstOrDefault(u => u.Id == id);
+        }
+
+        public void Alterar(int id, Usuario usuario, bool podeSeAutenticar)
+        {
+            var usuarioEncontrado = this.Pegar(id);
+            usuarioEncontrado.AlterarDados(usuario.Login, usuario.Senha, podeSeAutenticar);
+
+            this._unidadeDeTrabalho.Persistir();
+        }
     }
 }

@@ -159,6 +159,9 @@
     <Content Include="Views\Post\Ver.cshtml" />
     <Content Include="Views\Shared\_ModalLogin.cshtml" />
     <Content Include="Views\Shared\_Mensagens.cshtml" />
+    <Content Include="Views\Usuario\Gerenciar.cshtml" />
+    <Content Include="Views\Usuario\Editar.cshtml" />
+    <Content Include="Views\Usuario\Cadastrar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -191,6 +194,9 @@
     <Compile Include="ConfiguracaoDoUsuario.cs" />
     <Compile Include="ConfiguracaoDoPost.cs" />
     <Compile Include="ContextoDoBlog.cs" />
+    <Compile Include="CapturarErrosAttribute.cs" />
+    <Compile Include="ControllerExtensions.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="IServicoDeAutenticacao.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -202,6 +208,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModeloDeListaDePosts.cs" />
     <Compile Include="ModeloDePost.cs" />
+    <Compile Include="ModeloDeUsuario.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="RepositorioDeUsuarios.cs" />
     <Compile Include="RepositorioDePosts.cs" />
