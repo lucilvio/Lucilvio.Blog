@@ -23,17 +23,17 @@ namespace Lucilvio.Blog.Web
 
         public Usuario PegarPorLoginESenha(string login, string senha)
         {
-            return this._unidadeDeTrabalho.Lista<Usuario>().FirstOrDefault(u => u.Login == login && u.Senha == senha);
+            return this._unidadeDeTrabalho.Lista<Usuario>().Include(nameof(Usuario.Posts)).FirstOrDefault(u => u.Login == login && u.Senha == senha);
         }
 
         public object Listar()
         {
-            return this._unidadeDeTrabalho.Lista<Usuario>().ToList();
+            return this._unidadeDeTrabalho.Lista<Usuario>().Include(nameof(Usuario.Posts)).ToList();
         }
 
         public Usuario Pegar(int id)
         {
-            return this._unidadeDeTrabalho.Lista<Usuario>().FirstOrDefault(u => u.Id == id);
+            return this._unidadeDeTrabalho.Lista<Usuario>().Include(nameof(Usuario.Posts)).FirstOrDefault(u => u.Id == id);
         }
 
         public void Alterar(int id, Usuario usuario, bool podeSeAutenticar)

@@ -46,7 +46,7 @@ namespace Lucilvio.Blog.Testes
         public void AdicionaNovoPost()
         {
             var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
-            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar"));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", new Usuario("foo", "bar")));
 
             Assert.AreEqual(1, repositorioDePosts.Listar().Count());
         }
@@ -55,7 +55,7 @@ namespace Lucilvio.Blog.Testes
         public void BuscaPostPorIdentificador()
         {
             var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
-            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar"));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", new Usuario("foo", "bar")));
 
             Assert.IsNotNull(repositorioDePosts.Pegar(0));
         }
@@ -63,10 +63,12 @@ namespace Lucilvio.Blog.Testes
         [TestMethod]
         public void AlteraDadosDoPost()
         {
-            var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
-            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar"));
+            var usuario = new Usuario("foo", "bar");
 
-            repositorioDePosts.Alterar(0, new Post("Foo alterado", "Foo Bar alterado"));
+            var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", usuario));
+
+            repositorioDePosts.Alterar(0, "Foo alterado", "Foo Bar alterado", usuario);
 
             var postAlterado = repositorioDePosts.Pegar(0);
 

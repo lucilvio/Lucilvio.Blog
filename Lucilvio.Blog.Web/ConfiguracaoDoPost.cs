@@ -18,6 +18,7 @@ namespace Lucilvio.Blog.Web
             base.Property(p => p.Conteudo).IsMaxLength().IsRequired();
             base.Property(p => p.Titulo).HasMaxLength(255).IsRequired();
             base.Property(p => p.DataDoCadastro).IsRequired();
+            base.HasRequired(p => p.Usuario).WithMany(u => u.Posts);
         }
     }
 }

@@ -10,19 +10,17 @@ namespace Lucilvio.Blog.Web
     {
         public ModeloDeListaDePosts()
         {
-            this.Posts = new List<ModeloDePost>();
+            this.Posts = new List<ModeloDePostDaLista>();
         }
 
-        public ModeloDeListaDePosts(IEnumerable<Post> posts) : this()
+        public ModeloDeListaDePosts(IEnumerable<Post> posts, Usuario usuarioLogado) : this()
         {
             if (posts == null)
                 return;
 
-            posts.ToList().ForEach(p => this.Posts.Add(new ModeloDePost(p)));
+            posts.ToList().ForEach(p => this.Posts.Add(new ModeloDePostDaLista(p, usuarioLogado)));
         }
 
-        public IList<ModeloDePost> Posts { get; set; }
-
-        public string MensagemDeErro { get; set; }
+        public IList<ModeloDePostDaLista> Posts { get; set; }
     }
 }

@@ -12,13 +12,13 @@
                 <div style="height: 70px;">
                     <input type="hidden" id="idDoPost" value="@post.Id" />
                     <h3 class="pull-left"> @post.Titulo </h3>
-                    @if (User.Identity.IsAuthenticated)
+                    @if (User.Identity.IsAuthenticated && post.PodeSerEditado)
                     {
                         <a style="margin-top: 25px; margin-left: 20px" class="pull-left" href="@Url.Action("Editar", "Post", new { post.Id })"> <i class="glyphicon glyphicon-pencil"> </i> </a>
                     }
                 </div>
                 <div>
-                    <p> @post.ConteudoResumido </p>
+                    <p> @post.Conteudo </p>
                     <span style="font-size: x-small"> <i class="glyphicon glyphicon-time"></i> @post.DataDoCadastro </span> &nbsp; <span style="font-size: x-small"> <i class="glyphicon glyphicon-comment"></i> @post.QuantidadeDePosts </span>
                 </div>
             </div>

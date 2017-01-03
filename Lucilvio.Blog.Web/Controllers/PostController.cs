@@ -9,12 +9,16 @@ namespace Lucilvio.Blog.Web.Controllers
     public class PostController : Controller
     {
         private IUnidadeDeTrabalho _unidadeDeTrabalho;
+        private IServicoDeAutenticacao _servicoDeAutenticacao;
         private RepositorioDePosts _repositorioDePosts;
+        private RepositorioDeUsuarios _repositorioDeUsuarios;
 
-        public PostController(IUnidadeDeTrabalho unidadeDeTrabalho)
+        public PostController(IUnidadeDeTrabalho unidadeDeTrabalho, IServicoDeAutenticacao servicoDeAutenticacao)
         {
             this._unidadeDeTrabalho = unidadeDeTrabalho;
+            this._servicoDeAutenticacao = servicoDeAutenticacao;
             this._repositorioDePosts = new RepositorioDePosts(this._unidadeDeTrabalho);
+            this._repositorioDeUsuarios = new RepositorioDeUsuarios(this._unidadeDeTrabalho);
         }
 
         [HttpGet]
@@ -29,7 +33,8 @@ namespace Lucilvio.Blog.Web.Controllers
         [CapturarErros]
         public ActionResult Cadastrar(ModeloDePost modelo)
         {
-            this._repositorioDePosts.Adicionar(new Post(modelo.Titulo, modelo.Conteudo));
+            var usuario = this._repositorioDeUsuarios.Pegar(this._servicoDeAutenticacao.PegarIdentificadorDoUsuarioAutenticado());
+            this._repositorioDePosts.Adicionar(new Post(modelo.Titulo, modelo.Conteudo, usuario));
 
             return RedirectToAction("Index", "Home");
         }
@@ -51,7 +56,8 @@ namespace Lucilvio.Blog.Web.Controllers
         [CapturarErros]
         public ActionResult Editar(ModeloDePost modelo)
         {
-            this._repositorioDePosts.Alterar(modelo.Id, new Post(modelo.Titulo, modelo.Conteudo));
+            var usuario = this._repositorioDeUsuarios.Pegar(this._servicoDeAutenticacao.PegarIdentificadorDoUsuarioAutenticado());
+            this._repositorioDePosts.Alterar(modelo.Id, modelo.Titulo, modelo.Conteudo, usuario);
 
             return RedirectToAction("Index", "Home");
         }

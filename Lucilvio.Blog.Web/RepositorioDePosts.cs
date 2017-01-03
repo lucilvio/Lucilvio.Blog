@@ -31,10 +31,10 @@ namespace Lucilvio.Blog.Web
             return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).FirstOrDefault(p => p.Id == id);
         }
 
-        public void Alterar(int id, Post post)
+        public void Alterar(int id, string titulo, string conteudo, Usuario usuario)
         {
             var postOriginal = this.Pegar(id);
-            postOriginal.AlterarDados(post.Titulo, post.Conteudo);
+            postOriginal.AlterarDados(titulo, conteudo, usuario);
 
             this._unidadeDeTrabalho.Persistir();
         }

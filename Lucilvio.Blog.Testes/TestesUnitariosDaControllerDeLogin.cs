@@ -48,7 +48,8 @@ namespace Lucilvio.Blog.Testes
             this._mockDaUnidadeDeTrabalho.Setup(m => m.Persistir()).Returns(1);
 
             this._mockDoServicoDeAutenticacao = new Mock<IServicoDeAutenticacao>();
-            this._mockDoServicoDeAutenticacao.Setup(m => m.Autenticar(It.IsAny<Usuario>())).Callback((Usuario u) => { new Usuario("Foo bar", "foo"); });
+            this._mockDoServicoDeAutenticacao.Setup(m => m.Autenticar(It.IsAny<IDictionary<string, object>>())).Callback((IDictionary<string, object> u) =>
+                { new Dictionary<string, object> { { "id", 0 }, { "nome", "foo" } }; });
 
             this._repositorioDeUsuarios = new RepositorioDeUsuarios(this._mockDaUnidadeDeTrabalho.Object);
         }

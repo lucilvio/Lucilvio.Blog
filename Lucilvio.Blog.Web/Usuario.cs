@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 
@@ -9,9 +10,10 @@ namespace Lucilvio.Blog.Web
     {
         private Usuario()
         {
+            this.Posts = new Collection<Post>();
         }
 
-        public Usuario(string login, string senha)
+        public Usuario(string login, string senha) : this()
         {
             this.Validar(login, senha);
 
@@ -24,6 +26,7 @@ namespace Lucilvio.Blog.Web
         public string Login { get; private set; }
         public string Senha { get; private set; }
         public bool PodeSeAutenticar { get; private set; }
+        public ICollection<Post> Posts { get; private set; }
 
         public void AlterarDados(string login, string senha, bool podeSeAutenticar)
         {
@@ -47,6 +50,10 @@ namespace Lucilvio.Blog.Web
         {
             this.PodeSeAutenticar = false;
         }
+        public bool PodeEditarOPost(Post post)
+        {
+            return this.Posts.Contains(post);
+        }
 
         private void Validar(string login, string senha)
         {
@@ -56,6 +63,5 @@ namespace Lucilvio.Blog.Web
             if (string.IsNullOrEmpty(senha))
                 throw new InvalidOperationException("A senha do usuário não foi informada");
         }
-
     }
 }

@@ -43,6 +43,12 @@ namespace Lucilvio.Blog.Testes
         }
 
         [TestMethod]
+        public void UsuarioTemPosts()
+        {
+            Assert.IsNotNull(this._usuario.Posts);
+        }
+
+        [TestMethod]
         public void UsuarioPodeSeAutenticar()
         {
             Assert.IsTrue(this._usuario.PodeSeAutenticar);
@@ -96,6 +102,23 @@ namespace Lucilvio.Blog.Testes
         public void SenhaEhInformadoNaAlteracaoDeDados()
         {
             this._usuario.AlterarDados("Foo bar editado", "", true);
+        }
+
+        [TestMethod]
+        public void PodeEditarOPost()
+        {
+            var post = new Post("Ionon", "Jiomomom", this._usuario);
+
+            Assert.IsTrue(this._usuario.PodeEditarOPost(post));
+        }
+
+        [TestMethod]
+        public void NaoPodeEditarOPost()
+        {
+            var novoUsuario = new Usuario("Foo 2", "Bar 2");
+            var post = new Post("noinio", "Nionoo", novoUsuario);
+
+            Assert.IsFalse(this._usuario.PodeEditarOPost(post));
         }
     }
 }
