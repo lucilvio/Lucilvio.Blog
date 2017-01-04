@@ -14,10 +14,7 @@ namespace Lucilvio.Blog.Web
 
         public Post(string titulo, string conteudo, Usuario usuario) : this()
         {
-            if (usuario == null)
-                throw new InvalidOperationException("Não é possível criar um post sem usuário");
-
-            this.Validar(titulo, conteudo);
+            this.Validar(titulo, conteudo, usuario);
 
             this.Conteudo = conteudo;
             this.Titulo = titulo;
@@ -34,16 +31,20 @@ namespace Lucilvio.Blog.Web
 
         public bool TemComentarios => this.Comentarios.Any();
         public int QuantidadeDeComentarios => this.Comentarios.Count();
+        public string NomeDoAutor => this.Usuario?.Login;
 
         public ICollection<Comentario> Comentarios { get; private set; }
         public Usuario Usuario { get; private set; }
 
+        
+        
+
         public void AlterarDados(string titulo, string conteudo, Usuario usuario)
         {
-            if (usuario == null || !usuario.PodeEditarOPost(this))
-                throw new InvalidOperationException("O usuário não pode editar este post");
+            this.Validar(titulo, conteudo, usuario);
 
-            this.Validar(titulo, conteudo);
+            if (!usuario.PodeEditarOPost(this))
+                throw new InvalidOperationException("O usuário não pode editar este post");
 
             this.Titulo = titulo;
             this.Conteudo = conteudo;
@@ -54,13 +55,16 @@ namespace Lucilvio.Blog.Web
             this.Comentarios.Add(comentario);
         }
 
-        private void Validar(string titulo, string conteudo)
+        private void Validar(string titulo, string conteudo, Usuario usuario)
         {
             if (string.IsNullOrEmpty(titulo))
-                throw new InvalidOperationException("Não é possível criar um post sem título");
+                throw new InvalidOperationException("Título do post não informado");
 
             if (string.IsNullOrEmpty(conteudo))
-                throw new InvalidOperationException("Não é possível criar um post sem conteúdo");
+                throw new InvalidOperationException("Conteúdo do post não informado");
+
+            if (usuario == null)
+                throw new InvalidOperationException("Usuário do post não informado");
         }
 
     }

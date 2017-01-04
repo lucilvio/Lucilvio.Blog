@@ -23,12 +23,12 @@ namespace Lucilvio.Blog.Web
 
         public IEnumerable<Post> Listar()
         {
-            return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).ToList();
+            return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).Include(nameof(Post.Usuario)).ToList();
         }
 
         public Post Pegar(int id)
         {
-            return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).FirstOrDefault(p => p.Id == id);
+            return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).Include(nameof(Post.Usuario)).FirstOrDefault(p => p.Id == id);
         }
 
         public void Alterar(int id, string titulo, string conteudo, Usuario usuario)

@@ -18,8 +18,9 @@ namespace Lucilvio.Blog.Web
             this.Titulo = post.Titulo;
             this.Conteudo = post.Conteudo;
             this.DataDoCadastro = post.DataDoCadastro.ToShortDateString();
-            this.QuantidadeDePosts = post.QuantidadeDeComentarios.ToString();
+            this.QuantidadeDeComentarios = post.QuantidadeDeComentarios.ToString();
             this.Comentarios = post.Comentarios.ToList();
+            this.NomeDoAutor = post.NomeDoAutor;
         }
 
         public int Id { get; set; }
@@ -27,7 +28,8 @@ namespace Lucilvio.Blog.Web
         public string Titulo { get; set; }
         public string Conteudo { get; set; }
         public string DataDoCadastro { get; set; }
-        public string QuantidadeDePosts { get; private set; }
+        public string QuantidadeDeComentarios { get; private set; }
+        public string NomeDoAutor { get; set; }
         public IList<Comentario> Comentarios { get; set; }
     }
 }

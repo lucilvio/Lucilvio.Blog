@@ -112,6 +112,12 @@ namespace Lucilvio.Blog.Testes
         }
 
         [TestMethod]
+        public void TemNomeDoAutor()
+        {
+            Assert.AreEqual("Foo", this._post.NomeDoAutor);
+        }
+
+        [TestMethod]
         public void AdicionaComentarioAoPost()
         {
             this._post.AdicionarComentario(new Comentario("Foo Bar"));
