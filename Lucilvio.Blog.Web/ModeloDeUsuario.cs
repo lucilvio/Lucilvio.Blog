@@ -28,5 +28,6 @@ namespace Lucilvio.Blog.Web
         public string Senha { get; set; }
         public string ConfirmacaoDaSenha { get; set; }
         public bool PodeSeAutenticar { get; set; }
+        public bool EhAdministrador { get; set; }
     }
 }

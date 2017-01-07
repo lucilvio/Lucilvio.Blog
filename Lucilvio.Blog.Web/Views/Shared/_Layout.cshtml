@@ -25,7 +25,11 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li> <a href="@Url.Action("MeusPosts", "Post")"> Meus Posts </a> </li>
-                        <li> <a href="@Url.Action("Gerenciar", "Usuario")"> Gerenciar Usuários </a> </li>
+
+                        if (User.IsInRole(nameof(Usuario.EhAdminitrador)))
+                        {
+                            <li> <a href="@Url.Action("Gerenciar", "Usuario")"> Gerenciar Usuários </a> </li>
+                        }
                     }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

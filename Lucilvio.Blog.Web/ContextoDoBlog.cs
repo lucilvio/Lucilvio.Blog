@@ -12,7 +12,8 @@ namespace Lucilvio.Blog.Web
 {
     public class ContextoDoBlog : DbContext, IUnidadeDeTrabalho
     {
-        public ContextoDoBlog() : base("Server=tcp:blog-db.database.windows.net,1433;Initial Catalog=prd;Persist Security Info=False;User ID=lucilvio;Password=H0mEhOM3;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
+        //Server=tcp:blog-db.database.windows.net,1433;Initial Catalog=prd;Persist Security Info=False;User ID=lucilvio;Password=H0mEhOM3;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+        public ContextoDoBlog() : base("Data Source=.\\home;Initial Catalog=Lucilvio.Blog;Integrated Security=True")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ContextoDoBlog, Configuration>());
         }

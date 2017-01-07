@@ -57,7 +57,7 @@ namespace Lucilvio.Blog.Testes
         [TestMethod]
         public void FazLoginQuandoUsuarioESenhaSaoInformadosCorretamente()
         {
-            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo bar", "foo"));
+            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo bar", "foo", false));
 
             var controller = new LoginController(this._mockDaUnidadeDeTrabalho.Object, this._mockDoServicoDeAutenticacao.Object);
             var resultado = controller.Logar("Foo bar", "foo") as RedirectToRouteResult;
@@ -79,9 +79,9 @@ namespace Lucilvio.Blog.Testes
         [TestMethod]
         public void NaoFazLoginQuandoUsuarioESenhaSaoCorretosMasOUsuarioNaoTemPodeSeAutenticar()
         {
-            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo bar", "foo"));
+            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo bar", "foo", false));
             var usuario = this._repositorioDeUsuarios.Pegar(0);
-            usuario.RetirarPermissaoDeAutenticacao();
+            usuario.AlterarDados("Foo bar","foo", false, true);
 
             var controller = new LoginController(this._mockDaUnidadeDeTrabalho.Object, this._mockDoServicoDeAutenticacao.Object);
             var resultado = controller.Logar("Foo bar", "foo") as RedirectResult;

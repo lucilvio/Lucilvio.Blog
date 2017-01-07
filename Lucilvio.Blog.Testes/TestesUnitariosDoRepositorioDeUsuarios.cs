@@ -22,6 +22,7 @@ namespace Lucilvio.Blog.Testes
         private Mock<IDbSet<Usuario>> _mockDoDbSet;
 
         private RepositorioDeUsuarios _repositorioDeUsuarios;
+        private Usuario _usuario;
 
         [TestInitialize]
         public void Iniciar()
@@ -44,12 +45,13 @@ namespace Lucilvio.Blog.Testes
             this._mockDaUnidadeDeTrabalho.Setup(m => m.Persistir()).Returns(1);
 
             this._repositorioDeUsuarios = new RepositorioDeUsuarios(this._mockDaUnidadeDeTrabalho.Object);
+            this._usuario = new Usuario("Foo Bar", "Foo", false);
         }
 
         [TestMethod]
         public void AdicionaUsuarioNoRepositorio()
         {
-            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo Bar", "Foo"));
+            this._repositorioDeUsuarios.Adicionar(this._usuario);
 
             Assert.IsTrue(this._usuarios.Count() == 1);
         }
@@ -57,7 +59,7 @@ namespace Lucilvio.Blog.Testes
         [TestMethod]
         public void BuscaUsuarioPorIdentificador()
         {
-            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo bar", "senha"));
+            this._repositorioDeUsuarios.Adicionar(this._usuario);
 
             Assert.IsNotNull(this._repositorioDeUsuarios.Pegar(0));
         }
@@ -65,7 +67,7 @@ namespace Lucilvio.Blog.Testes
         [TestMethod]
         public void BuscaUsuarioPeloLoginESenha()
         {
-            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo Bar", "Foo"));
+            this._repositorioDeUsuarios.Adicionar(this._usuario);
             var usuarioEncontrado = this._repositorioDeUsuarios.PegarPorLoginESenha("Foo Bar", "Foo");
 
             Assert.IsNotNull(usuarioEncontrado);
@@ -74,8 +76,8 @@ namespace Lucilvio.Blog.Testes
         [TestMethod]
         public void NaoTrazResultadoQuandoBuscaUsuarioPeloLoginESenhaErrados()
         {
-            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo Bar", "Foo"));
-            var usuarioEncontrado = this._repositorioDeUsuarios.PegarPorLoginESenha("Foo ", "Foo");
+            this._repositorioDeUsuarios.Adicionar(this._usuario);
+            var usuarioEncontrado = this._repositorioDeUsuarios.PegarPorLoginESenha("Foo Ba", "Foo");
 
             Assert.IsNull(usuarioEncontrado);
         }
@@ -83,7 +85,7 @@ namespace Lucilvio.Blog.Testes
         [TestMethod]
         public void ListaUsuarios()
         {
-            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo bar", "foo"));
+            this._repositorioDeUsuarios.Adicionar(this._usuario);
             var usuarios = this._repositorioDeUsuarios.Listar();
 
             Assert.AreEqual(1, this._usuarios.Count());
@@ -93,14 +95,15 @@ namespace Lucilvio.Blog.Testes
         [TestMethod]
         public void AlteraUsuario()
         {
-            this._repositorioDeUsuarios.Adicionar(new Usuario("Foo bar", "foo"));
-            this._repositorioDeUsuarios.Alterar(0, new Usuario("Foo bar editado", "foo editado"), false);
+            this._repositorioDeUsuarios.Adicionar(this._usuario);
+            this._repositorioDeUsuarios.Alterar(0, "Foo bar editado", "foo editado", false, false);
 
             var usuarioAlterado = this._repositorioDeUsuarios.Pegar(0);
 
             Assert.AreEqual("Foo bar editado", usuarioAlterado.Login);
             Assert.AreEqual("foo editado", usuarioAlterado.Senha);
             Assert.IsFalse(usuarioAlterado.PodeSeAutenticar);
+            Assert.IsFalse(usuarioAlterado.EhAdminitrador);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Lucilvio.Blog.Testes
         [TestInitialize]
         public void Iniciar()
         {
-            this._usuario = new Usuario("Foo", "Bar");
+            this._usuario = new Usuario("Foo", "Bar", false);
             this._post = new Post("Foo", "Foo Bar", this._usuario);
         }
 
@@ -22,14 +22,14 @@ namespace Lucilvio.Blog.Testes
         [ExpectedException(typeof(InvalidOperationException))]
         public void NaoEhPossivelCriarUmPostSemTitulo()
         {
-            new Post("", "Foo", new Usuario("Foo", "Bar"));
+            new Post("", "Foo", this._usuario);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void NaoEhPossivelCriarUmPostSemTexto()
         {
-            new Post("Foo", "", new Usuario("Foo", "Bar"));
+            new Post("Foo", "", this._usuario);
         }
 
         [TestMethod]
@@ -69,7 +69,7 @@ namespace Lucilvio.Blog.Testes
         [TestMethod]
         public void AdicionarOPostCriadoAoUsuarioAssociado()
         {
-            var usuario = new Usuario("Foo", "Bar");
+            var usuario = new Usuario("Foo", "Bar", false);
             var post = new Post("niono", "nionon", usuario);
 
             Assert.IsTrue(usuario.Posts.Contains(post));
@@ -102,7 +102,7 @@ namespace Lucilvio.Blog.Testes
         [ExpectedException(typeof(InvalidOperationException))]
         public void NaoEditaOPostCasoOUsuarioInformadoNaoSejaOMesmoQueCriouOPost()
         {
-            this._post.AlterarDados("Foo Bar", "Bar", new Usuario("Foo 2", "Bar 2"));
+            this._post.AlterarDados("Foo Bar", "Bar", new Usuario("Foo 2", "Bar 2", false));
         }
 
         [TestMethod]

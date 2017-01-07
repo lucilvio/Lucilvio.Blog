@@ -13,6 +13,7 @@ namespace Lucilvio.Blog.Web
             base.ToTable("Usuario");
             base.HasKey(u => u.Id);
 
+            base.Property(u => u.EhAdminitrador).IsRequired();
             base.Property(u => u.Login).HasMaxLength(255).IsRequired();
             base.Property(p => p.Senha).HasMaxLength(255).IsRequired();
         }

@@ -38,7 +38,8 @@ namespace Lucilvio.Blog.Web.Controllers
 
             this._servicoDeAutenticacao.Autenticar(new Dictionary<string, object> {
                 { "id",usuarioEncontrado.Id },
-                { "nome",usuarioEncontrado.Login }
+                { "nome",usuarioEncontrado.Login },
+                { "perfil", usuarioEncontrado.EhAdminitrador ? nameof(Usuario.EhAdminitrador) : "" }
             });
 
             return RedirectToAction("Index", "Home");

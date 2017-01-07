@@ -60,8 +60,12 @@ namespace Lucilvio.Blog.Web
                     claims.Add(new Claim(ClaimTypes.Name, valor));
                 else if (chave == "email")
                     claims.Add(new Claim(ClaimTypes.Email, valor));
+                else if (chave == "perfil")
+                    claims.Add(new Claim(ClaimTypes.Role, valor));
                 else
                     claims.Add(new Claim(chave, valor));
+
+                
             }
 
             return claims.ToArray();

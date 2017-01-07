@@ -19,7 +19,7 @@ namespace Lucilvio.Blog.Web.Migrations
 
             if (admin == null)
             {
-                context.Set<Usuario>().Add(new Usuario("admin", "admin"));
+                context.Set<Usuario>().Add(new Usuario("admin", "admin", true));
                 context.SaveChanges();
             }
         }

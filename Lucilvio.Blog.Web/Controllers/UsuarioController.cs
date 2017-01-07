@@ -38,7 +38,7 @@ namespace Lucilvio.Blog.Web.Controllers
         {
             this.ConferirSenhas(usuario.Senha, usuario.ConfirmacaoDaSenha);
 
-            this._repositorioDeUsuarios.Adicionar(new Usuario(usuario.Login, usuario.Senha));
+            this._repositorioDeUsuarios.Adicionar(new Usuario(usuario.Login, usuario.Senha, usuario.EhAdministrador));
             this.AdicionarMensagemDeSucesso("Usuário cadastrado com sucesso");
 
             return RedirectToAction("Gerenciar");
@@ -61,7 +61,7 @@ namespace Lucilvio.Blog.Web.Controllers
         {
             this.ConferirSenhas(usuario.Senha, usuario.ConfirmacaoDaSenha);
 
-            this._repositorioDeUsuarios.Alterar(usuario.Id, new Usuario(usuario.Login, usuario.Senha), usuario.PodeSeAutenticar);
+            this._repositorioDeUsuarios.Alterar(usuario.Id, usuario.Login, usuario.Senha, usuario.PodeSeAutenticar, usuario.EhAdministrador);
             this.AdicionarMensagemDeSucesso("Dados do usuário alterados com sucesso");
 
             return RedirectToAction("Gerenciar");

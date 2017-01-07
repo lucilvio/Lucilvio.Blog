@@ -36,12 +36,17 @@ namespace Lucilvio.Blog.Web
             return this._unidadeDeTrabalho.Lista<Usuario>().Include(nameof(Usuario.Posts)).FirstOrDefault(u => u.Id == id);
         }
 
-        public void Alterar(int id, Usuario usuario, bool podeSeAutenticar)
+        public void Alterar(int id, string login, string senha, bool podeSeAutenticar, bool ehAdministrador)
         {
             var usuarioEncontrado = this.Pegar(id);
-            usuarioEncontrado.AlterarDados(usuario.Login, usuario.Senha, podeSeAutenticar);
+            usuarioEncontrado.AlterarDados(login, senha, podeSeAutenticar, ehAdministrador);
 
             this._unidadeDeTrabalho.Persistir();
+        }
+
+        internal void Alterar(int id, string login, string senha, bool podeSeAutenticar, object ehAdministrador)
+        {
+            throw new NotImplementedException();
         }
     }
 }

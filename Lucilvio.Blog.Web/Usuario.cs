@@ -13,13 +13,14 @@ namespace Lucilvio.Blog.Web
             this.Posts = new Collection<Post>();
         }
 
-        public Usuario(string login, string senha) : this()
+        public Usuario(string login, string senha, bool ehAdministrador) : this()
         {
             this.Validar(login, senha);
 
             this.Login = login;
             this.Senha = senha;
-            this.ConcederPermissaoDeAutenticacao();
+            this.PodeSeAutenticar = true;
+            this.EhAdminitrador = ehAdministrador;
         }
 
         public int Id { get; private set; }
@@ -27,29 +28,19 @@ namespace Lucilvio.Blog.Web
         public string Senha { get; private set; }
         public bool PodeSeAutenticar { get; private set; }
         public ICollection<Post> Posts { get; private set; }
+        public bool EhAdminitrador { get; private set; }
 
-        public void AlterarDados(string login, string senha, bool podeSeAutenticar)
+        public void AlterarDados(string login, string senha, bool podeSeAutenticar, bool ehAdministrador)
         {
             this.Validar(login, senha);
 
             this.Login = login;
             this.Senha = senha;
 
-            if (podeSeAutenticar)
-                this.ConcederPermissaoDeAutenticacao();
-            else
-                this.RetirarPermissaoDeAutenticacao();
+            this.PodeSeAutenticar = podeSeAutenticar;
+            this.EhAdminitrador = ehAdministrador;
         }
 
-        public void ConcederPermissaoDeAutenticacao()
-        {
-            this.PodeSeAutenticar = true;
-        }
-
-        public void RetirarPermissaoDeAutenticacao()
-        {
-            this.PodeSeAutenticar = false;
-        }
         public bool PodeEditarOPost(Post post)
         {
             return this.Posts.Contains(post);
@@ -63,5 +54,6 @@ namespace Lucilvio.Blog.Web
             if (string.IsNullOrEmpty(senha))
                 throw new InvalidOperationException("A senha do usuário não foi informada");
         }
+
     }
 }
