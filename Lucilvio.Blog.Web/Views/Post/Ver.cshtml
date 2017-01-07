@@ -1,4 +1,5 @@
-﻿
+﻿@model ModeloDePost
+
 @{
     ViewBag.Title = "Ver";
 }
@@ -22,19 +23,28 @@
         <div class="col-lg-12">
             <h5> Comentários </h5>
 
-            <form id="formulario-de-comentario">
-                <div class="form-inline">
-                    <input type="text" class="form-control input-sm" name="comentario" id="comentario" required placeholder="Deixe seu comentário..." />
-                    <input type="button" value="Comentar" class="adicionar-comentario" />
-                </div>
-            </form>
-        </div>
-        <ul id="lista-de-comentarios">
-            @foreach (var comentario in Model.Comentarios)
+            @if (Model.PermiteComentarios)
             {
-                <li style='font-size: small'> @comentario.Conteudo <span style="font-size: x-small"> <i class="glyphicon glyphicon-time"></i> @comentario.Data </span> </li>
+                <form id="formulario-de-comentario">
+                    <div class="form-inline">
+                        <input type="text" class="form-control input-sm" name="comentario" id="comentario" required placeholder="Deixe seu comentário..." />
+                        <input type="button" value="Comentar" class="adicionar-comentario" />
+                    </div>
+                </form>
+
+                <ul id="lista-de-comentarios">
+
+                    @foreach (var comentario in Model.Comentarios)
+                {
+                        <li style='font-size: small'> @comentario.Conteudo <span style="font-size: x-small"> <i class="glyphicon glyphicon-time"></i> @comentario.Data </span> </li>
+                    }
+                </ul>
             }
-        </ul>
+            else
+            {
+                <p> O autor do post bloqueou os comentários </p>
+            }
+        </div>
     </div>
 </div>
 

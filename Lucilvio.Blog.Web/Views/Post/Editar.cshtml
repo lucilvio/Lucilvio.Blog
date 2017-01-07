@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ModeloDePost
+@{
     ViewBag.Title = "Editar Post";
 }
 
@@ -15,6 +16,11 @@
     <div class="form-group">
         <label class="control-label"> Conteúdo </label>
         <textarea class="form-control" name="Conteudo"> @Model.Conteudo </textarea>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label"> Permite Comentários? </label>
+        @Html.CheckBoxFor(p => p.PermiteComentarios)
     </div>
 
     <button class="btn btn-primary"> Editar </button>

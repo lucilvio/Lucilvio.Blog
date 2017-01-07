@@ -12,13 +12,14 @@ namespace Lucilvio.Blog.Web
             this.Comentarios = new Collection<Comentario>();
         }
 
-        public Post(string titulo, string conteudo, Usuario usuario) : this()
+        public Post(string titulo, string conteudo, bool permiteComentarios, Usuario usuario) : this()
         {
             this.Validar(titulo, conteudo, usuario);
 
             this.Conteudo = conteudo;
             this.Titulo = titulo;
             this.DataDoCadastro = DateTime.Now;
+            this.PermiteComentarios = permiteComentarios;
 
             this.Usuario = usuario;
             this.Usuario.Posts.Add(this);
@@ -35,11 +36,9 @@ namespace Lucilvio.Blog.Web
 
         public ICollection<Comentario> Comentarios { get; private set; }
         public Usuario Usuario { get; private set; }
+        public bool PermiteComentarios { get; private set; }
 
-        
-        
-
-        public void AlterarDados(string titulo, string conteudo, Usuario usuario)
+        public void AlterarDados(string titulo, string conteudo, bool permiteComentarios, Usuario usuario)
         {
             this.Validar(titulo, conteudo, usuario);
 
@@ -48,10 +47,14 @@ namespace Lucilvio.Blog.Web
 
             this.Titulo = titulo;
             this.Conteudo = conteudo;
+            this.PermiteComentarios = permiteComentarios;
         }
 
         public void AdicionarComentario(Comentario comentario)
         {
+            if (!this.PermiteComentarios)
+                throw new InvalidOperationException("O post está marcado para não permitir comentários");
+
             this.Comentarios.Add(comentario);
         }
 

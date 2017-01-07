@@ -15,28 +15,28 @@ namespace Lucilvio.Blog.Testes
         public void Iniciar()
         {
             this._usuario = new Usuario("Foo", "Bar", false);
-            this._post = new Post("Foo", "Foo Bar", this._usuario);
+            this._post = new Post("Foo", "Foo Bar", true, this._usuario);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void NaoEhPossivelCriarUmPostSemTitulo()
         {
-            new Post("", "Foo", this._usuario);
+            new Post("", "Foo", true, this._usuario);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void NaoEhPossivelCriarUmPostSemTexto()
         {
-            new Post("Foo", "", this._usuario);
+            new Post("Foo", "", true, this._usuario);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void NaoEhPossivelCriarUmPostSemUsuario()
         {
-            new Post("Foo", "Bar", null);
+            new Post("Foo", "Bar", true, null);
         }
 
         [TestMethod]
@@ -58,6 +58,12 @@ namespace Lucilvio.Blog.Testes
         }
 
         [TestMethod]
+        public void PostPermiteComentarios()
+        {
+            Assert.IsTrue(this._post.PermiteComentarios);
+        }
+
+        [TestMethod]
         public void RegistraDataDaCriacaoDoPost()
         {
             var mascara = "dd/MM/yyyy hh:mm";
@@ -70,7 +76,7 @@ namespace Lucilvio.Blog.Testes
         public void AdicionarOPostCriadoAoUsuarioAssociado()
         {
             var usuario = new Usuario("Foo", "Bar", false);
-            var post = new Post("niono", "nionon", usuario);
+            var post = new Post("niono", "nionon", true, usuario);
 
             Assert.IsTrue(usuario.Posts.Contains(post));
         }
@@ -78,31 +84,32 @@ namespace Lucilvio.Blog.Testes
         [TestMethod]
         public void AlteraDadosDoPost()
         {
-            this._post.AlterarDados("Foo Bar Alterado", "Conteúdo do post alterado", this._usuario);
+            this._post.AlterarDados("Foo Bar Alterado", "Conteúdo do post alterado", true, this._usuario);
 
             Assert.AreEqual("Foo Bar Alterado", this._post.Titulo);
             Assert.AreEqual("Conteúdo do post alterado", this._post.Conteudo);
+            Assert.IsTrue(this._post.PermiteComentarios);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void TituloNaoPodeSerVazioNaEdicao()
         {
-            this._post.AlterarDados("", "Conteúdo do post alterado", this._usuario);
+            this._post.AlterarDados("", "Conteúdo do post alterado", true, this._usuario);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ConteudoNaoPodeSerVazioNaEdicao()
         {
-            this._post.AlterarDados("Foo Bar", "", this._usuario);
+            this._post.AlterarDados("Foo Bar", "", true, this._usuario);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void NaoEditaOPostCasoOUsuarioInformadoNaoSejaOMesmoQueCriouOPost()
         {
-            this._post.AlterarDados("Foo Bar", "Bar", new Usuario("Foo 2", "Bar 2", false));
+            this._post.AlterarDados("Foo Bar", "Bar", true, new Usuario("Foo 2", "Bar 2", false));
         }
 
         [TestMethod]
@@ -123,6 +130,14 @@ namespace Lucilvio.Blog.Testes
             this._post.AdicionarComentario(new Comentario("Foo Bar"));
 
             Assert.IsTrue(this._post.TemComentarios);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void NaoAdicionaComentarioQuandoPostEstaMarcadoParaNaoPermitirComentarios()
+        {
+            var post = new Post("Foo", "Bar", false, new Usuario("Foo", "Bar", false));
+            post.AdicionarComentario(new Comentario("Comentário de teste"));
         }
 
         [TestMethod]

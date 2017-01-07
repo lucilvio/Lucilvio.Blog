@@ -13,12 +13,16 @@ namespace Lucilvio.Blog.Web
 
         public ModeloDePostDaLista(Post post, Usuario usuarioLogado)
         {
+            if (post == null)
+                return;
+
             this.Id = post.Id;
             this.Titulo = post.Titulo;
             this.Conteudo = this.ResumirConteudo(post.Conteudo);
             this.DataDoCadastro = post.DataDoCadastro.ToShortDateString();
-            this.QuantidadeDeComentarios = post.QuantidadeDeComentarios.ToString();
             this.NomeDoAutor = post.NomeDoAutor;
+
+            this.QuantidadeDeComentarios = post.PermiteComentarios ? post.QuantidadeDeComentarios.ToString() : "0";
         }
 
         public int Id { get; set; }

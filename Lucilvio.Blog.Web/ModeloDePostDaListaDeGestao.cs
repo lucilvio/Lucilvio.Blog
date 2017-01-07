@@ -16,13 +16,13 @@ namespace Lucilvio.Blog.Web
             this.Id = post.Id;
             this.Titulo = post.Titulo;
             this.DataDoCadastro = post.DataDoCadastro.ToShortDateString();
-            this.QuantidadeDeComentarios = post.QuantidadeDeComentarios.ToString();
+            this.PermiteComentarios = post.PermiteComentarios;
         }
 
         public int Id { get; set; }
 
         public string Titulo { get; set; }
         public string DataDoCadastro { get; set; }
-        public string QuantidadeDeComentarios { get; private set; }
+        public bool PermiteComentarios { get; private set; }
     }
 }

@@ -52,7 +52,7 @@ namespace Lucilvio.Blog.Testes
         public void AdicionaNovoPost()
         {
             var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
-            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", this._usuario));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", true, this._usuario));
 
             Assert.AreEqual(1, repositorioDePosts.Listar().Count());
         }
@@ -61,7 +61,7 @@ namespace Lucilvio.Blog.Testes
         public void BuscaPostPorIdentificador()
         {
             var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
-            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", this._usuario));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", true, this._usuario));
 
             Assert.IsNotNull(repositorioDePosts.Pegar(0));
         }
@@ -70,8 +70,8 @@ namespace Lucilvio.Blog.Testes
         public void BuscaPostsPorUsuario()
         {
             var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
-            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", this._usuario));
-            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", this._usuario));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", true, this._usuario));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", true, this._usuario));
 
             Assert.AreEqual(0, repositorioDePosts.ListarPorUsuario(1).Count());
             Assert.AreEqual(2, repositorioDePosts.ListarPorUsuario(0).Count());
@@ -81,14 +81,15 @@ namespace Lucilvio.Blog.Testes
         public void AlteraDadosDoPost()
         {
             var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
-            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", this._usuario));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario));
 
-            repositorioDePosts.Alterar(0, "Foo alterado", "Foo Bar alterado", this._usuario);
+            repositorioDePosts.Alterar(0, "Foo alterado", "Foo Bar alterado", true, this._usuario);
 
             var postAlterado = repositorioDePosts.Pegar(0);
 
             Assert.AreEqual("Foo alterado", postAlterado.Titulo);
             Assert.AreEqual("Foo Bar alterado", postAlterado.Conteudo);
+            Assert.IsTrue(postAlterado.PermiteComentarios);
         }
     }
 }

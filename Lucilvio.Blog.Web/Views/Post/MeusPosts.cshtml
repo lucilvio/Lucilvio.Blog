@@ -11,7 +11,7 @@
                 <th> # </th>
                 <th> Titulo </th>
                 <th> Cadastrado em </th>
-                <th> Comentários </th>
+                <th> Permite Comentários </th>
                 <th></th>
             </tr>
             @foreach (var post in Model.Posts)
@@ -20,6 +20,7 @@
                     <td> @post.Id </td>
                     <td> @post.Titulo </td>
                     <td> @post.DataDoCadastro </td>
+                    <td> @Html.Raw(post.PermiteComentarios ? "<i class='glyphicon glyphicon-check'></i>" : "") </td>
                     <td> <a href="@Url.Action("Editar", "Post", new { id = post.Id })"> Editar </a> </td>
                 </tr>
             }

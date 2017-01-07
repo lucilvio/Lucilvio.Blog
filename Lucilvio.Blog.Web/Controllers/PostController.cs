@@ -44,7 +44,7 @@ namespace Lucilvio.Blog.Web.Controllers
         public ActionResult Cadastrar(ModeloDePost modelo)
         {
             var usuario = this._repositorioDeUsuarios.Pegar(this._servicoDeAutenticacao.PegarIdentificadorDoUsuarioAutenticado());
-            this._repositorioDePosts.Adicionar(new Post(modelo.Titulo, modelo.Conteudo, usuario));
+            this._repositorioDePosts.Adicionar(new Post(modelo.Titulo, modelo.Conteudo, modelo.PermiteComentarios, usuario));
 
             this.AdicionarMensagemDeSucesso("Post cadastrado com sucesso");
 
@@ -58,7 +58,7 @@ namespace Lucilvio.Blog.Web.Controllers
             if (!id.HasValue)
                 return RedirectToAction("Index", "Home");
 
-            var post = this._repositorioDePosts.Pegar(id.Value);
+            var post = new ModeloDePost(this._repositorioDePosts.Pegar(id.Value));
 
             return View(post);
         }
@@ -69,7 +69,7 @@ namespace Lucilvio.Blog.Web.Controllers
         public ActionResult Editar(ModeloDePost modelo)
         {
             var usuario = this._repositorioDeUsuarios.Pegar(this._servicoDeAutenticacao.PegarIdentificadorDoUsuarioAutenticado());
-            this._repositorioDePosts.Alterar(modelo.Id, modelo.Titulo, modelo.Conteudo, usuario);
+            this._repositorioDePosts.Alterar(modelo.Id, modelo.Titulo, modelo.Conteudo, modelo.PermiteComentarios, usuario);
 
             this.AdicionarMensagemDeSucesso("Post editado com sucesso");
 
@@ -83,7 +83,7 @@ namespace Lucilvio.Blog.Web.Controllers
             if (!id.HasValue)
                 return RedirectToAction("Index", "Home");
 
-            var post = this._repositorioDePosts.Pegar(id.Value);
+            var post = new ModeloDePost(this._repositorioDePosts.Pegar(id.Value));
 
             return View(post);
         }

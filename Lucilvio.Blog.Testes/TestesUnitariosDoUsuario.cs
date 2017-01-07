@@ -115,7 +115,7 @@ namespace Lucilvio.Blog.Testes
         [TestMethod]
         public void PodeEditarOPost()
         {
-            var post = new Post("Ionon", "Jiomomom", this._usuario);
+            var post = new Post("Ionon", "Jiomomom", true, this._usuario);
 
             Assert.IsTrue(this._usuario.PodeEditarOPost(post));
         }
@@ -124,7 +124,7 @@ namespace Lucilvio.Blog.Testes
         public void NaoPodeEditarOPost()
         {
             var novoUsuario = new Usuario("Foo 2", "Bar 2", false);
-            var post = new Post("noinio", "Nionoo", novoUsuario);
+            var post = new Post("noinio", "Nionoo", true, novoUsuario);
 
             Assert.IsFalse(this._usuario.PodeEditarOPost(post));
         }
