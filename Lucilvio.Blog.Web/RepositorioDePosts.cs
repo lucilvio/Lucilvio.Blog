@@ -38,5 +38,11 @@ namespace Lucilvio.Blog.Web
 
             this._unidadeDeTrabalho.Persistir();
         }
+
+        public IEnumerable<Post> ListarPorUsuario(int idDoUsuario)
+        {
+            return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).Include(nameof(Post.Usuario))
+                .Where(p => p.Usuario.Id == idDoUsuario).ToList();
+        }
     }
 }

@@ -29,7 +29,9 @@ namespace Lucilvio.Blog.Testes
 
             this._mockDoDbSet.Setup(m => m.Add(It.IsAny<Post>())).Returns((Post p) =>
             {
-                this._posts = new List<Post> { p }.AsQueryable();
+                var lista = new List<Post>(this._posts.ToList());
+                lista.Add(p);
+                this._posts = new List<Post>(lista).AsQueryable();
                 this._mockDoDbSet.Setup(m => m.Provider).Returns(this._posts.Provider);
                 this._mockDoDbSet.Setup(m => m.Expression).Returns(this._posts.Expression);
                 this._mockDoDbSet.Setup(m => m.ElementType).Returns(this._posts.ElementType);
@@ -58,6 +60,19 @@ namespace Lucilvio.Blog.Testes
             repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", new Usuario("foo", "bar")));
 
             Assert.IsNotNull(repositorioDePosts.Pegar(0));
+        }
+
+        [TestMethod]
+        public void BuscaPostsPorUsuario()
+        {
+            var usuario = new Usuario("Foo", "Bar");
+
+            var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", usuario));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo bar", usuario));
+
+            Assert.AreEqual(0, repositorioDePosts.ListarPorUsuario(1).Count());
+            Assert.AreEqual(2, repositorioDePosts.ListarPorUsuario(0).Count());
         }
 
         [TestMethod]

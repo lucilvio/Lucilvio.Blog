@@ -23,6 +23,16 @@ namespace Lucilvio.Blog.Web.Controllers
 
         [HttpGet]
         [Authorize]
+        public ActionResult MeusPosts()
+        {
+            var usuario = this._servicoDeAutenticacao.PegarIdentificadorDoUsuarioAutenticado();
+            var posts = this._repositorioDePosts.ListarPorUsuario(usuario);
+
+            return View(new ModeloDeListaDePostsParaGestao(posts));
+        }
+
+        [HttpGet]
+        [Authorize]
         public ActionResult Cadastrar()
         {
             return View();
@@ -36,7 +46,9 @@ namespace Lucilvio.Blog.Web.Controllers
             var usuario = this._repositorioDeUsuarios.Pegar(this._servicoDeAutenticacao.PegarIdentificadorDoUsuarioAutenticado());
             this._repositorioDePosts.Adicionar(new Post(modelo.Titulo, modelo.Conteudo, usuario));
 
-            return RedirectToAction("Index", "Home");
+            this.AdicionarMensagemDeSucesso("Post cadastrado com sucesso");
+
+            return RedirectToAction(nameof(MeusPosts));
         }
 
         [HttpGet]
@@ -59,7 +71,9 @@ namespace Lucilvio.Blog.Web.Controllers
             var usuario = this._repositorioDeUsuarios.Pegar(this._servicoDeAutenticacao.PegarIdentificadorDoUsuarioAutenticado());
             this._repositorioDePosts.Alterar(modelo.Id, modelo.Titulo, modelo.Conteudo, usuario);
 
-            return RedirectToAction("Index", "Home");
+            this.AdicionarMensagemDeSucesso("Post editado com sucesso");
+
+            return RedirectToAction(nameof(MeusPosts));
         }
 
         [HttpGet]

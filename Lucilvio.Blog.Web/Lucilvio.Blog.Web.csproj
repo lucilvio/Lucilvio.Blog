@@ -182,6 +182,7 @@
     <Content Include="Views\Usuario\Gerenciar.cshtml" />
     <Content Include="Views\Usuario\Editar.cshtml" />
     <Content Include="Views\Usuario\Cadastrar.cshtml" />
+    <Content Include="Views\Post\MeusPosts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -226,8 +227,10 @@
     </Compile>
     <Compile Include="IDbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ModeloDeListaDePostsParaGestao.cs" />
     <Compile Include="ModeloDeListaDePosts.cs" />
     <Compile Include="ModeloDePost.cs" />
+    <Compile Include="ModeloDePostDaListaDeGestao.cs" />
     <Compile Include="ModeloDePostDaLista.cs" />
     <Compile Include="ModeloDeUsuario.cs" />
     <Compile Include="Post.cs" />
