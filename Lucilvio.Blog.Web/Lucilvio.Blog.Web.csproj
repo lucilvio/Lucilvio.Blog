@@ -240,6 +240,7 @@
     <Compile Include="ServicoDeAutenticacaoViaCookies.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Usuario.cs" />
+    <Compile Include="VariaveisDeAmbiente.cs" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
