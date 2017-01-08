@@ -23,18 +23,18 @@ namespace Lucilvio.Blog.Web
 
         public IEnumerable<Post> Listar()
         {
-            return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).Include(nameof(Post.Usuario)).ToList();
+            return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).Include(nameof(Post.Usuario)).Include(nameof(Post.Tags)).ToList();
         }
 
         public Post Pegar(int id)
         {
-            return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).Include(nameof(Post.Usuario)).FirstOrDefault(p => p.Id == id);
+            return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).Include(nameof(Post.Usuario)).Include(nameof(Post.Tags)).FirstOrDefault(p => p.Id == id);
         }
 
-        public void Alterar(int id, string titulo, string conteudo, bool permiteComentarios, Usuario usuario)
+        public void Alterar(int id, string titulo, string conteudo, bool permiteComentarios, Usuario usuario, IEnumerable<Tag> tags = null)
         {
             var postOriginal = this.Pegar(id);
-            postOriginal.AlterarDados(titulo, conteudo, permiteComentarios, usuario);
+            postOriginal.AlterarDados(titulo, conteudo, permiteComentarios, usuario, tags);
 
             this._unidadeDeTrabalho.Persistir();
         }

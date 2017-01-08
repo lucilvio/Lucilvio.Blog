@@ -20,8 +20,21 @@ namespace Lucilvio.Blog.Web.Migrations
             if (admin == null)
             {
                 context.Set<Usuario>().Add(new Usuario("admin", "admin", true));
-                context.SaveChanges();
+                
             }
+
+            var tags = context.Set<Tag>().ToList();
+
+            var tagFoo = new Tag("Foo");
+            var tagBar = new Tag("Bar");
+
+            if (!tags.Contains(tagFoo))
+                context.Set<Tag>().Add(tagFoo);
+
+            if (!tags.Contains(tagBar))
+                context.Set<Tag>().Add(tagBar);
+
+            context.SaveChanges();
         }
     }
 }

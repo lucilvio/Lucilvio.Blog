@@ -1,7 +1,9 @@
 ﻿using Lucilvio.Blog.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace Lucilvio.Blog.Testes
 {
@@ -40,6 +42,22 @@ namespace Lucilvio.Blog.Testes
         }
 
         [TestMethod]
+        public void CriaPostComTags()
+        {
+            var post = new Post("Foo", "Bar", true, new Usuario("Foo", "Bar", false), new List<Tag> { new Tag("Foo") });
+
+            Assert.AreEqual(1, post.Tags.Count());
+        }
+
+        [TestMethod]
+        public void CriaPostSemTags()
+        {
+            var post = new Post("Foo", "Bar", true, new Usuario("Foo", "Bar", false));
+
+            Assert.AreEqual(0, post.Tags.Count());
+        }
+
+        [TestMethod]
         public void PostTemTitulo()
         {
             Assert.AreEqual("Foo", this._post.Titulo);
@@ -55,6 +73,12 @@ namespace Lucilvio.Blog.Testes
         public void PostTemUsuario()
         {
             Assert.IsNotNull(this._post.Usuario);
+        }
+
+        [TestMethod]
+        public void PostTemTags()
+        {
+            Assert.IsNotNull(this._post.Tags);
         }
 
         [TestMethod]
@@ -79,6 +103,38 @@ namespace Lucilvio.Blog.Testes
             var post = new Post("niono", "nionon", true, usuario);
 
             Assert.IsTrue(usuario.Posts.Contains(post));
+        }
+
+        [TestMethod]
+        public void AdicionaTagsAoPost()
+        {
+            this._post.AdicionarTags(new Tag("Foo"), new Tag("Bar"));
+
+            Assert.AreEqual(2, this._post.Tags.Count());
+        }
+
+        [TestMethod]
+        public void NaoAdicionaTagsQuandoInformaNulo()
+        {
+            this._post.AdicionarTags(null);
+
+            Assert.AreEqual(0, this._post.Tags.Count());
+        }
+
+        [TestMethod]
+        public void RemoveTagsDoPost()
+        {
+            this._post.AdicionarTags(new Tag("Foo"), new Tag("Bar"));
+            this._post.RemoverTags("Foo", "Bar");
+
+            Assert.AreEqual(0, this._post.Tags.Count());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void NaoAdicionaDuasTagsIguaisAoPost()
+        {
+            this._post.AdicionarTags(new Tag("Foo"), new Tag("Foo"));
         }
 
         [TestMethod]
@@ -130,6 +186,14 @@ namespace Lucilvio.Blog.Testes
             this._post.AdicionarComentario(new Comentario("Foo Bar"));
 
             Assert.IsTrue(this._post.TemComentarios);
+        }
+
+        [TestMethod]
+        public void NaoAdicionaComentarioQuandoInformaNulo()
+        {
+            this._post.AdicionarComentario(null);
+
+            Assert.AreEqual(0, this._post.Comentarios.Count());
         }
 
         [TestMethod]

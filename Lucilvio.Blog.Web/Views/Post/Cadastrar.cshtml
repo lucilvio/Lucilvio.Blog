@@ -1,4 +1,4 @@
-﻿@model ModeloDePost
+﻿@model ModeloDeCadastroDePost
 
 @{
     ViewBag.Title = "Cadastrar";
@@ -9,17 +9,28 @@
 <form action="@Url.Action("Cadastrar", "Post")" method="post">
     <div class="form-group">
         <label class="control-label"> Título </label>
-        <input type="text" class="form-control" name="Titulo" />
+        <input type="text" class="form-control" name="Titulo" required />
     </div>
 
     <div class="form-group">
         <label class="control-label"> Conteúdo </label>
-        <textarea class="form-control" name="Conteudo"> </textarea>
+        <textarea class="form-control" name="Conteudo" required> </textarea>
     </div>
 
     <div class="form-group">
         <label class="control-label"> Permite Comentários? </label>
         @Html.CheckBoxFor(p => p.PermiteComentarios, new { @checked = "checked" })
+    </div>
+
+    <div class="form-group">
+        <label class="control-label"> Tags </label>
+        <br />
+        @for (int i = 0; i < Model.Tags.Tags.Count(); i++)
+        {
+            <input type="hidden" name='@("Tags.Tags[" + i + "].Id")' value="@Model.Tags.Tags[i].Id" />
+            <input type="hidden" name='@("Tags.Tags[" + i + "].Nome")' value="@Model.Tags.Tags[i].Nome" />
+            @Model.Tags.Tags[i].Nome @Html.CheckBox("Tags.Tags["+ i + "].Ativa", Model.Tags.Tags[i].Ativa)
+        }
     </div>
 
     <button class="btn btn-primary"> Cadastrar </button>

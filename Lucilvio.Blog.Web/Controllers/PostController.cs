@@ -35,16 +35,21 @@ namespace Lucilvio.Blog.Web.Controllers
         [Authorize]
         public ActionResult Cadastrar()
         {
-            return View();
+            var tags = new RepositorioDeTags(this._unidadeDeTrabalho).Listar();
+            var modelo = new ModeloDeCadastroDePost(null, new ModeloDeListaDeTags(tags));
+
+            return View(modelo);
         }
 
         [HttpPost]
         [Authorize]
         [CapturarErros]
-        public ActionResult Cadastrar(ModeloDePost modelo)
+        public ActionResult Cadastrar(ModeloDeCadastroDePost modelo)
         {
+            var tagsCadastradas = new RepositorioDeTags(this._unidadeDeTrabalho).Listar();
+
             var usuario = this._repositorioDeUsuarios.Pegar(this._servicoDeAutenticacao.PegarIdentificadorDoUsuarioAutenticado());
-            this._repositorioDePosts.Adicionar(new Post(modelo.Titulo, modelo.Conteudo, modelo.PermiteComentarios, usuario));
+            this._repositorioDePosts.Adicionar(new Post(modelo.Titulo, modelo.Conteudo, modelo.PermiteComentarios, usuario, modelo.Tags.TagsAtivas(tagsCadastradas)));
 
             this.AdicionarMensagemDeSucesso("Post cadastrado com sucesso");
 
@@ -58,7 +63,8 @@ namespace Lucilvio.Blog.Web.Controllers
             if (!id.HasValue)
                 return RedirectToAction("Index", "Home");
 
-            var post = new ModeloDePost(this._repositorioDePosts.Pegar(id.Value));
+            var tags = new RepositorioDeTags(this._unidadeDeTrabalho).Listar();
+            var post = new ModeloDeEdicaoDePost(this._repositorioDePosts.Pegar(id.Value), new ModeloDeListaDeTags(tags));
 
             return View(post);
         }
@@ -66,10 +72,11 @@ namespace Lucilvio.Blog.Web.Controllers
         [HttpPost]
         [Authorize]
         [CapturarErros]
-        public ActionResult Editar(ModeloDePost modelo)
+        public ActionResult Editar(ModeloDeEdicaoDePost modelo)
         {
+            var tagsCadastradas = new RepositorioDeTags(this._unidadeDeTrabalho).Listar();
             var usuario = this._repositorioDeUsuarios.Pegar(this._servicoDeAutenticacao.PegarIdentificadorDoUsuarioAutenticado());
-            this._repositorioDePosts.Alterar(modelo.Id, modelo.Titulo, modelo.Conteudo, modelo.PermiteComentarios, usuario);
+            this._repositorioDePosts.Alterar(modelo.Id, modelo.Titulo, modelo.Conteudo, modelo.PermiteComentarios, usuario, modelo.Tags.TagsAtivas(tagsCadastradas));
 
             this.AdicionarMensagemDeSucesso("Post editado com sucesso");
 
