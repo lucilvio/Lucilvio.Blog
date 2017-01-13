@@ -9,9 +9,10 @@ namespace Lucilvio.Blog.Web
     {
         public ModeloDePostDaLista()
         {
+            this.Tags = new List<string>();
         }
 
-        public ModeloDePostDaLista(Post post, Usuario usuarioLogado)
+        public ModeloDePostDaLista(Post post, Usuario usuarioLogado) : this()
         {
             if (post == null)
                 return;
@@ -21,6 +22,8 @@ namespace Lucilvio.Blog.Web
             this.Conteudo = this.ResumirConteudo(post.Conteudo);
             this.DataDoCadastro = post.DataDoCadastro.ToShortDateString();
             this.NomeDoAutor = post.NomeDoAutor;
+
+            post.Tags.ToList().ForEach(t => this.Tags.Add(t.Nome));
 
             this.QuantidadeDeComentarios = post.PermiteComentarios ? post.QuantidadeDeComentarios.ToString() : "0";
         }
@@ -32,6 +35,7 @@ namespace Lucilvio.Blog.Web
         public string DataDoCadastro { get; set; }
         public string QuantidadeDeComentarios { get; private set; }
         public string NomeDoAutor { get; private set; }
+        public IList<string> Tags { get; set; }
 
         private string ResumirConteudo(string conteudo)
         {

@@ -9,7 +9,11 @@
         <div class="col-lg-12">
             <div style="height: 70px;">
                 <input type="hidden" id="idDoPost" value="@Model.Id" />
-                <h3 class="pull-left"> @Model.Titulo </h3>
+                <h3 class="pull-left"> @Model.Titulo @foreach (var tag in Model.Tags)
+                {
+                    <span style="font-size: x-small; margin-right: 5px;" class="label label-default"> @tag </span>
+                }</h3>
+                
             </div>
             <div>
                 <p> @Model.Conteudo </p>

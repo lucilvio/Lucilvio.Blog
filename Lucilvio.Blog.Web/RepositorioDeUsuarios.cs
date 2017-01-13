@@ -43,10 +43,5 @@ namespace Lucilvio.Blog.Web
 
             this._unidadeDeTrabalho.Persistir();
         }
-
-        internal void Alterar(int id, string login, string senha, bool podeSeAutenticar, object ehAdministrador)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

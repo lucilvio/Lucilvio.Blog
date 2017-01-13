@@ -10,6 +10,7 @@ namespace Lucilvio.Blog.Web
         public ModeloDePost()
         {
             this.Comentarios = new List<Comentario>();
+            this.Tags = new List<string>();
         }
 
         public ModeloDePost(Post post) : this()
@@ -23,6 +24,8 @@ namespace Lucilvio.Blog.Web
             this.NomeDoAutor = post.NomeDoAutor;
             this.PermiteComentarios = post.PermiteComentarios;
 
+            post.Tags.ToList().ForEach(t => this.Tags.Add(t.Nome));
+
             this.QuantidadeDeComentarios = this.PermiteComentarios ? post.QuantidadeDeComentarios.ToString() : "0";
         }
 
@@ -34,6 +37,7 @@ namespace Lucilvio.Blog.Web
         public string QuantidadeDeComentarios { get; private set; }
         public string NomeDoAutor { get; set; }
         public IList<Comentario> Comentarios { get; set; }
+        public IList<string> Tags { get; set; }
         public bool PermiteComentarios { get; set; }
     }
 }
