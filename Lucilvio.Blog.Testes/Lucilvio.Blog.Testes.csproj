@@ -63,6 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestesUnitariosDaControllerDeLogin.cs" />
     <Compile Include="TestesUnitariosDeTag.cs" />
+    <Compile Include="TestesUnitariosDoRepositorioDeTags.cs" />
     <Compile Include="TestesUnitariosDoRepositorioDeUsuarios.cs" />
     <Compile Include="TestesUnitariosDoRepositorioDePosts.cs" />
     <Compile Include="TestesUnitariosDeComentario.cs" />

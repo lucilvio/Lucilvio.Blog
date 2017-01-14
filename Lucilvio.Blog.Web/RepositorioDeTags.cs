@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Lucilvio.Blog.Web.Controllers
+namespace Lucilvio.Blog.Web
 {
-    internal class RepositorioDeTags
+    public class RepositorioDeTags
     {
         private IUnidadeDeTrabalho _unidadeDeTrabalho;
 

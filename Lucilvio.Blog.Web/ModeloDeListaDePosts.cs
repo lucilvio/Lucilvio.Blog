@@ -13,12 +13,12 @@ namespace Lucilvio.Blog.Web
             this.Posts = new List<ModeloDePostDaLista>();
         }
 
-        public ModeloDeListaDePosts(IEnumerable<Post> posts, Usuario usuarioLogado) : this()
+        public ModeloDeListaDePosts(IEnumerable<Post> posts) : this()
         {
             if (posts == null)
                 return;
 
-            posts.ToList().ForEach(p => this.Posts.Add(new ModeloDePostDaLista(p, usuarioLogado)));
+            posts.ToList().ForEach(p => this.Posts.Add(new ModeloDePostDaLista(p)));
         }
 
         public IList<ModeloDePostDaLista> Posts { get; set; }

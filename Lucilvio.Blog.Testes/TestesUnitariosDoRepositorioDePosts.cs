@@ -1,15 +1,9 @@
-﻿using Lucilvio.Blog.Web;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using Moq;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Linq.Expressions;
+using Lucilvio.Blog.Web;
+using System.Data.Entity;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lucilvio.Blog.Testes
 {
@@ -90,6 +84,63 @@ namespace Lucilvio.Blog.Testes
             Assert.AreEqual("Foo alterado", postAlterado.Titulo);
             Assert.AreEqual("Foo Bar alterado", postAlterado.Conteudo);
             Assert.IsTrue(postAlterado.PermiteComentarios);
+        }
+
+        [TestMethod]
+        public void BuscaPorTags()
+        {
+            var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Foo") }));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Foo") }));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Bar") }));
+
+            var posts = repositorioDePosts.ListarPorTags("Foo");
+
+            Assert.AreEqual(2, posts.Count());
+        }
+
+        [TestMethod]
+        public void BuscarTodosOsPostsQuandoFiltroForVazio()
+        {
+            var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Foo") }));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Foo") }));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Bar") }));
+
+            var posts = repositorioDePosts.ListarPorTags();
+
+            Assert.AreEqual(4, posts.Count());
+
+        }
+
+        [TestMethod]
+        public void BuscarTodosOsPostsQuandoFiltroForNulo()
+        {
+            var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Foo") }));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Foo") }));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Bar") }));
+
+            var posts = repositorioDePosts.ListarPorTags(null);
+
+            Assert.AreEqual(4, posts.Count());
+        }
+
+        [TestMethod]
+        public void BuscarTodosOsPostsQuandoFiltroTiverApenasTagsVazias()
+        {
+            var repositorioDePosts = new RepositorioDePosts(this._mockDaUnidadeDeTrabalho.Object);
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Foo") }));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Foo") }));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario));
+            repositorioDePosts.Adicionar(new Post("Foo", "Foo Bar", true, this._usuario, new List<Tag> { new Tag("Bar") }));
+
+            var posts = repositorioDePosts.ListarPorTags("", "");
+
+            Assert.AreEqual(4, posts.Count());
         }
     }
 }

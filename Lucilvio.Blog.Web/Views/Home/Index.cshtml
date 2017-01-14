@@ -1,14 +1,16 @@
-﻿@{
+﻿@model ModeloDaHome
+@{
     ViewBag.Title = "Index";
 }
 
 <h1>Posts</h1>
 
-@foreach (var post in Model.Posts)
-{
-    <div class="post">
-        <div class="row">
-            <div class="col-lg-12">
+<div class="post">
+    <div class="row">
+        <div class="col-lg-10">
+            @foreach (var post in Model.Posts.Posts)
+            {
+
                 <div style="height: 70px;">
                     <input type="hidden" id="idDoPost" value="@post.Id" />
                     <h3 class="pull-left">
@@ -21,7 +23,7 @@
                 </div>
                 <div>
                     <p>
-                        @post.Conteudo 
+                        @post.Conteudo
                     </p>
 
                     <span style="font-size: x-small"> <i class="glyphicon glyphicon-time"></i> @post.DataDoCadastro </span> &nbsp;
@@ -29,15 +31,32 @@
                     <span style="font-size: x-small"> <i class="glyphicon glyphicon-user"></i> @post.NomeDoAutor </span>
 
 
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a href="@Url.Action("Ver", "Post", new { id = post.Id })"> Continuar lendo... </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <hr />
+            }
         </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-12">
-                <a href="@Url.Action("Ver", "Post", new { id = post.Id })"> Continuar lendo... </a>
-            </div>
+        <div class="class-col-lg-2">
+            <h4>Tags</h4>
+            @foreach (var tag in Model.Tags.Tags)
+            {
+                <span class="label label-default tag" style="cursor: pointer">@tag.Nome</span>
+            }
         </div>
     </div>
-    <hr />
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $(".tag").click(function () {
+                document.location = "/Home?tags=" + $(this).text();
+            });
+        });
+    </script>    
 }

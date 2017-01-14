@@ -12,7 +12,7 @@ namespace Lucilvio.Blog.Web
             this.Tags = new List<string>();
         }
 
-        public ModeloDePostDaLista(Post post, Usuario usuarioLogado) : this()
+        public ModeloDePostDaLista(Post post) : this()
         {
             if (post == null)
                 return;

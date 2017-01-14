@@ -21,16 +21,14 @@ namespace Lucilvio.Blog.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string[] tags = null)
         {
-            var listaDePostsEncontrados = new RepositorioDePosts(this._unidadeDeTrabalho).Listar();
+            var posts = new RepositorioDePosts(this._unidadeDeTrabalho).ListarPorTags(tags);
+            var tagsCadastradas = new RepositorioDeTags(this._unidadeDeTrabalho).Listar();
 
-            var idDoUsuarioLogado = _servicoDeAutenticacao.PegarIdentificadorDoUsuarioAutenticado();
-            var usuarioLogado = _repositorioDeUsuarios.Pegar(idDoUsuarioLogado);
+            var modelo = new ModeloDaHome(posts, tagsCadastradas);
 
-            var modeloDeListaDePosts = new ModeloDeListaDePosts(listaDePostsEncontrados, usuarioLogado);
-
-            return View(modeloDeListaDePosts);
+            return View(modelo);
         }
     }
 }

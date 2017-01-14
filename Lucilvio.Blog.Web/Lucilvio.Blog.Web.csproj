@@ -217,7 +217,8 @@
     <Compile Include="ContextoDoBlog.cs" />
     <Compile Include="CapturarErrosAttribute.cs" />
     <Compile Include="ControllerExtensions.cs" />
-    <Compile Include="Controllers\RepositorioDeTags.cs" />
+    <Compile Include="ModeloDaHome.cs" />
+    <Compile Include="RepositorioDeTags.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="IServicoDeAutenticacao.cs" />
     <Compile Include="Controllers\LoginController.cs" />

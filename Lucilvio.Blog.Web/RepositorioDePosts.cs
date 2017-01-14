@@ -44,5 +44,14 @@ namespace Lucilvio.Blog.Web
             return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).Include(nameof(Post.Usuario))
                 .Where(p => p.Usuario.Id == idDoUsuario).ToList();
         }
+
+        public IEnumerable<Post> ListarPorTags(params string[] tags)
+        {
+            if (tags == null || !tags.Any() || tags.All(t => string.IsNullOrEmpty(t)))
+                return this.Listar();
+
+            return this._unidadeDeTrabalho.Lista<Post>().Include(nameof(Post.Comentarios)).Include(nameof(Post.Usuario)).Include(nameof(Post.Tags))
+                .Where(p => p.Tags.Any(t => tags.ToList().Contains(t.Nome)));
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace Lucilvio.Blog.Web
             this.Login = usuario.Login;
             this.Senha = usuario.Senha;
             this.PodeSeAutenticar = usuario.PodeSeAutenticar;
+            this.EhAdministrador = usuario.EhAdminitrador;
         }
 
         public int Id { get; set; }
